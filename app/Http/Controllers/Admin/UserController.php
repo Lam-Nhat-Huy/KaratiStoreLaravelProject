@@ -11,4 +11,10 @@ class UserController extends Controller
     public function __construct()
     {
     }
+
+    public function index()
+    {
+        $template = "";
+        return view('admin.dashboard.layout', compact('template'));
+    }
 }
