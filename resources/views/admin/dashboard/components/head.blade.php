@@ -5,3 +5,12 @@
 <link href="{{ asset('admin') }}/font-awesome/css/font-awesome.css" rel="stylesheet">
 <link href="{{ asset('admin') }}/css/animate.css" rel="stylesheet">
 <link href="{{ asset('admin') }}/css/style.css" rel="stylesheet">
+<link href="{{ asset('admin') }}/css/custom.css" rel="stylesheet">
+<script src="{{ asset('admin') }}/js/jquery-3.1.1.min.js"></script>
+
+
+@if (isset($config['css']) && is_array($config['css']))
+    @foreach ($config['css'] as $key => $value)
+        {!! '<link rel="stylesheet" href="' . $value . '">' !!}
+    @endforeach
+@endif

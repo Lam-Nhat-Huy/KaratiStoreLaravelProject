@@ -1,0 +1,62 @@
+.uk-flex-space-between {
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.uk-flex-middle {
+    -ms-flex-pack: justify;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.uk-flex {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.filter .perpage {
+    display: inline-block;
+}
+
+.ibox-content {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.filter .perpage,
+.filter .action {
+    display: flex;
+    align-items: center;
+}
+.filter .action {
+    flex-grow: 1;
+}
+.filter .input-group {
+    max-width: 400px;
+    display: flex;
+}
+
+.btn {
+    margin-bottom: 0 !important;
+    font-size: 13px;
+    border-radius: 0;
+    height: 32px;
+}
+
+.filter .form-control {
+    height: 32px;
+    max-width: 200px;
+    font-size: 13px;
+}
+
+.mr10 {
+    margin-right: 10px;
+}

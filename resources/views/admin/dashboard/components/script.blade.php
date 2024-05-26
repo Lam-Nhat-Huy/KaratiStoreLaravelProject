@@ -1,13 +1,16 @@
     <!-- Mainly scripts -->
-    <script src="{{ asset('admin') }}/js/jquery-3.1.1.min.js"></script>
     <script src="{{ asset('admin') }}/js/bootstrap.min.js"></script>
     <script src="{{ asset('admin') }}/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="{{ asset('admin') }}/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="{{ asset('admin') }}/lib/library.js"></script>
 
-    // Dùng để lặp các link js được config ở bên controller
-    @foreach ($config['js'] as $key => $value)
-        {!! '<script src="' . $value . '"></script>' !!}
-    @endforeach
+
+    {{-- Dùng để lặp các link js được config ở bên controller --}}
+    @if (isset($config['js']) && is_array($config['js']))
+        @foreach ($config['js'] as $key => $value)
+            {!! '<script src="' . $value . '"></script>' !!}
+        @endforeach
+    @endif
 
     <script>
         $(document).ready(function() {
