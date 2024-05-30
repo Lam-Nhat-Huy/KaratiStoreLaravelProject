@@ -22,7 +22,7 @@
                         kiếm</button>
                 </div>
             </div>
-            <a href="" class="btn btn-danger"><i class="fa fa-plus"></i>Thêm Mới</a>
+            <a href="{{ route('user.create') }}" class="btn btn-danger"><i class="fa fa-plus"></i>Thêm Mới</a>
         </div>
 
     </div>

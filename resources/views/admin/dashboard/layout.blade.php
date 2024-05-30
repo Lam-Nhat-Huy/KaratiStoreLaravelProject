@@ -11,7 +11,7 @@
         <div id="page-wrapper" class="gray-bg">
             @include('admin.dashboard.components.navbar')
             @include($template)
-            @include('admin.dashboard.components.footer')
+            {{-- @include('admin.dashboard.components.footer') --}}
         </div>
     </div>
     @include('admin.dashboard.components.script')

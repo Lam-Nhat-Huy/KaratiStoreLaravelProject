@@ -29,7 +29,9 @@ class User extends Authenticatable
         'image',
         'description',
         'user_agent',
-        'ip'
+        'phone',
+        'ip',
+        'user_category_id'
     ];
 
     /**

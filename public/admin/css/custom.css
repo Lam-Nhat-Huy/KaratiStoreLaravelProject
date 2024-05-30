@@ -60,3 +60,25 @@
 .mr10 {
     margin-right: 10px;
 }
+.mb10 {
+    margin-bottom: 20px;
+}
+
+.ibox {
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 1);
+}
+
+.panel-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #000;
+}
+
+.panel-description {
+    font-size: 15px;
+}
+
+.form-control {
+    height: 42px;
+}
