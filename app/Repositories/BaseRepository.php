@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class BaseService
  * @package App\Services
  */
+
+/*Nơi làm chức năng thêm sửa xóa, có thể tái sử bằng cách exstend BaseRepository*/
 class BaseRepository implements BaseRepositoryInterface
 {
     protected $model;
@@ -18,6 +20,16 @@ class BaseRepository implements BaseRepositoryInterface
     public function __construct(Model $model)
     {
         $this->model = $model;
+    }
+
+    public function pagnition(array $column = ['*'], array $condition = [], array $join = [], int $perpage = 10)
+    {
+        $query = $this->model->select($column)->where($condition);
+        if (!empty($join)) {
+            $query->join(...$join);
+        }
+
+        return $query->paginate($perpage);
     }
 
     public function all()
@@ -34,5 +46,21 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $model = $this->model->create($payload);
         return $model->fresh();
+    }
+
+    public function delete(int $id = 0)
+    {
+        return $this->findById($id)->delete();
+    }
+
+    public function forceDelete(int $id = 0)
+    {
+        return $this->findById($id)->forceDelete();
+    }
+
+    public function update(array $payload = [], int $id = 0)
+    {
+        $model = $this->findById($id);
+        return $model->update($payload);
     }
 }

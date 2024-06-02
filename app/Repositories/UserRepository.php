@@ -2,26 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-
+use App\Models\User;
 
 /**
- * Class UserService
- * @package App\Services
+ * Class UserRepository
+ * @package App\Repositories
  */
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    protected $model;
-
     public function __construct(User $model)
     {
-        $this->model = $model;
-    }
-
-    public function getAllPaginate()
-    {
-        $users =  User::paginate(10);
-        return $users;
+        parent::__construct($model);
     }
 }
