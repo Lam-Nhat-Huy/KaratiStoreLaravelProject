@@ -22,18 +22,18 @@
                     IN+
                 </div>
             </li>
-            <li class="active">
+            <li>
                 <a href="{{ route('dashboard.index') }}"><i class="fa fa-th-large"></i> <span
                         class="nav-label">Dashboards</span></a>
             </li>
 
             <li class="active">
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Quản lý thành
+                <a href=""><i class="fa fa-user"></i> <span class="nav-label">Quản lý thành
                         viên</span>
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li><a href="">QL Nhóm Thành Viên</a></li>
                     <li><a href="{{ route('user.index') }}">QL Thành Viên</a></li>
+                    <li><a href="">QL Nhóm Thành Viên</a></li>
                 </ul>
             </li>
         </ul>

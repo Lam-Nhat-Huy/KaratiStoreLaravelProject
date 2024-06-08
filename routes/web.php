@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use App\Http\Middleware\AuthLoginMiddleware;
@@ -10,10 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 /* BACKEND ROUTES */
 
-Route::get('/', function () {
-    return 'Hello World';
-});
-
+Route::get('/', [AuthController::class, 'index'])->name('auth.index')->middleware(AuthLoginMiddleware::class);
 Route::get('/quan-tri', [AuthController::class, 'index'])->name('auth.index')->middleware(AuthLoginMiddleware::class);
 Route::post('/login-post', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/dang-xuat', [AuthController::class, 'logout'])->name('auth.logout');
@@ -38,3 +36,5 @@ Route::prefix('admin')->middleware(AuthenticateMiddleware::class)->group(functio
 
 /* AJAX */
 Route::get('/ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index');
+Route::post('/ajax/dashboard/changeStatus', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
+Route::post('/ajax/dashboard/changeStatusAll', [AjaxDashboardController::class, 'changeStatusAll'])->name('ajax.dashboard.changeStatusAll');

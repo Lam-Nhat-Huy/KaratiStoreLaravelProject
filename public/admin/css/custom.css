@@ -64,6 +64,10 @@
     margin-bottom: 20px;
 }
 
+.ml10 {
+    margin-left: 10px;
+}
+
 .ibox {
     box-shadow: 0 0px 1px rgba(0, 0, 0, 1);
 }
@@ -81,4 +85,28 @@
 
 .form-control {
     height: 42px;
+}
+
+.active-bg {
+    background: #ffc !important;
+}
+
+#checkAll, .checkBoxItem {
+    height: 15px;
+    width: 15px;
+}
+
+.switchery-small {
+    border-radius: 20px;
+    height: 20px;
+    width: 33px;
+}
+
+.switchery-small>small {
+    height: 20px;
+    width: 30px;
+}
+
+.select2-container--default {
+    margin-right: 10px !important;
 }

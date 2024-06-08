@@ -1,7 +1,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
                 <input type="checkbox" id="checkAll" class="input-checkbox" value="">
             </th>
             <th>Họ tên</th>
@@ -17,15 +17,16 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center">
-                        <input type="checkbox" class="input-checkbox checkBoxItem" value="">
+                        <input type="checkbox" class="input-checkbox checkBoxItem" value="{{ $user->id }}">
                     </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->address }}</td>
-                    <td>
-                        <input type="checkbox" value="{{ $user->publish }}" class="js-switch"
-                            {{ $user->publish == 1 ? 'checked' : '' }} />
+                    <td class="js-switch-{{ $user->id }}">
+                        <input type="checkbox" value="{{ $user->publish }}" class="js-switch status "
+                            data-field="publish" data-model="User" {{ $user->publish == 1 ? 'checked' : '' }}
+                            data-modelId="{{ $user->id }}" />
                     </td>
                     <td>
                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary"><i

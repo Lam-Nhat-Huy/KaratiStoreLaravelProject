@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 /*Nơi làm chức năng thêm sửa xóa, có thể tái sử bằng cách exstend BaseRepository*/
 class BaseRepository implements BaseRepositoryInterface
 {
+
+    /* Xài chung thì viết hàm bên đây rồi */
     protected $model;
 
     public function __construct(Model $model)
@@ -22,14 +24,19 @@ class BaseRepository implements BaseRepositoryInterface
         $this->model = $model;
     }
 
-    public function pagnition(array $column = ['*'], array $condition = [], array $join = [], int $perpage = 10)
+    public function pagination(array $column = ['*'], array $condition = [], array $join = [], array $extend = [], int $perPage = 10)
     {
-        $query = $this->model->select($column)->where($condition);
+        $query = $this->model->select($column)->where(function ($query) use ($condition) {
+            if (isset($condition['keyword']) && !empty($condition['keyword'])) {
+                $query->where('name', 'LIKE', '%' . $condition['keyword'] . '%');
+            }
+        });
+
         if (!empty($join)) {
             $query->join(...$join);
         }
 
-        return $query->paginate($perpage);
+        return $query->paginate($perPage)->withQueryString()->withPath(env('APP_URL') . $extend['path']);
     }
 
     public function all()
@@ -62,5 +69,10 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $model = $this->findById($id);
         return $model->update($payload);
+    }
+
+    public function updateByWhereIn(string $whereInField, array $whereIn = [], array $payload)
+    {
+        return $this->model->whereIn($whereInField, $whereIn)->update($payload);
     }
 }

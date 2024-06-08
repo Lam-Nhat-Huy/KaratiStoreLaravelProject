@@ -32,7 +32,8 @@ class User extends Authenticatable
         'user_agent',
         'phone',
         'ip',
-        'user_category_id'
+        'user_category_id',
+        'publish'
     ];
 
     /**
