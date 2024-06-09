@@ -5,10 +5,10 @@
         <div class="ibox ">
             <div class="ibox-title">
                 <h5>{{ $config['seo']['index']['table'] }}</h5>
-                @include('admin.user.components.toolbox')
+                @include('admin.user.user.components.toolbox')
             </div>
-            @include('admin.user.components.filter')
-            @include('admin.user.components.table')
+            @include('admin.user.user.components.filter')
+            @include('admin.user.user.components.table')
         </div>
     </div>
 

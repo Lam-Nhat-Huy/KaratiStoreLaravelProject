@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\UserCatalogueController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -30,6 +31,20 @@ Route::prefix('admin')->middleware(AuthenticateMiddleware::class)->group(functio
 
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('user.delete')->where(['id' => '[0-9]+']);
         Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy')->where(['id' => '[0-9]+']);
+    });
+
+    Route::prefix('user/catalogue')->group(function () {
+        Route::get('/index', [UserCatalogueController::class, 'index'])->name('user.catalogue.index');
+        Route::get('/heal', [UserCatalogueController::class, 'healthy_testing'])->name('user.catalogue.healthy_testing');
+
+        Route::get('/create', [UserCatalogueController::class, 'create'])->name('user.catalogue.create');
+        Route::post('/store', [UserCatalogueController::class, 'store'])->name('user.catalogue.store');
+
+        Route::get('/edit/{id}', [UserCatalogueController::class, 'edit'])->name('user.catalogue.edit')->where(['id' => '[0-9]+']);
+        Route::post('/update/{id}', [UserCatalogueController::class, 'update'])->name('user.catalogue.update')->where(['id' => '[0-9]+']);
+
+        Route::get('/delete/{id}', [UserCatalogueController::class, 'delete'])->name('user.catalogue.delete')->where(['id' => '[0-9]+']);
+        Route::delete('/destroy/{id}', [UserCatalogueController::class, 'destroy'])->name('user.catalogue.destroy')->where(['id' => '[0-9]+']);
     });
 });
 

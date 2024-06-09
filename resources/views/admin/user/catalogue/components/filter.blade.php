@@ -1,4 +1,4 @@
-<form action="{{ route('user.index') }}" method="GET">
+<form action="{{ route('user.catalogue.index') }}" method="GET">
     <div class="ibox-content">
         <div class="filter">
             <div class="perpage">
@@ -6,7 +6,7 @@
                     $perpage = request('perpage') ?: old('perpage');
                 @endphp
                 <select name="perpage" class="form-control input-sm mr10">
-                    @for ($i = 1; $i < 200; $i++)
+                    @for ($i = 10; $i < 200; $i++)
                         <option {{ $perpage == $i ? 'selected' : '' }} value="{{ $i }}">{{ $i }}
                             bản ghi</option>
                     @endfor
@@ -26,11 +26,6 @@
                     @endforeach
                 </select>
 
-                <select name="user_category_id" class="form-control setupSelect2">
-                    <option value="0">Chọn nhóm thành viên</option>
-                    <option value="1">Quản trị viên</option>
-                </select>
-
                 <div class="input-group mr10">
                     <input type="text" name="keyword" value="{{ request('keyword') ?: old('keyword') }}"
                         placeholder="Nhập từ khóa mà bạn muốn tìm kiếm" class="form-control">
@@ -39,7 +34,9 @@
                             kiếm</button>
                     </div>
                 </div>
-                <a href="{{ route('user.create') }}" class="btn btn-danger"><i class="fa fa-plus"></i>Thêm Mới</a>
+                <a href="{{ route('user.catalogue.create') }}" class="btn btn-danger"><i class="fa fa-plus"></i> Thêm
+                    Mới Nhóm
+                    Thành Viên</a>
             </div>
 
         </div>

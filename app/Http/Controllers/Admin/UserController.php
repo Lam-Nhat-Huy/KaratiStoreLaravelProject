@@ -27,7 +27,7 @@ class UserController extends Controller
     {
         $users = $this->userService->paginate($request);
 
-        $template = "admin.user.pages.index";
+        $template = "admin.user.user.pages.index";
 
         $config = [
             'css' => [
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function create()
     {
         $provinces = $this->provinceRepository->all();
-        $template = "admin.user.pages.store";
+        $template = "admin.user.user.pages.store";
         $config = [
             'css' => [
                 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
@@ -86,7 +86,7 @@ class UserController extends Controller
     {
         $users = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->all();
-        $template = "admin.user.pages.store";
+        $template = "admin.user.user.pages.store";
 
         $config = [
             'css' => [
@@ -122,7 +122,7 @@ class UserController extends Controller
     public function delete($id)
     {
         $user = $this->userRepository->findById($id);
-        $template = 'admin.user.pages.delete';
+        $template = 'admin.user.user.pages.delete';
         $config['seo'] = config('apps.user');
         return view('admin.dashboard.layout', compact(
             'template',
