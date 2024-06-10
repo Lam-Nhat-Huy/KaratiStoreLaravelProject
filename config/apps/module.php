@@ -30,6 +30,17 @@ return [
                     'route' => 'user.catalogue.index'
                 ]
             ]
+        ],
+        [
+            'title' => 'Cấu hình chung',
+            'icon' => 'fa fa-cog',
+            'name' => 'post',
+            'subModule' => [
+                [
+                    'title' => 'QL Ngôn Ngữ',
+                    'route' => 'language.index'
+                ]
+            ]
         ]
     ]
 ];

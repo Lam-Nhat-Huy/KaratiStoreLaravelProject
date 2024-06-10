@@ -2,24 +2,22 @@
 
 namespace App\Services;
 
-use App\Services\Interfaces\UserCatalogueServiceInterface;
-use App\Repositories\Interfaces\UserCatalogueRepositoryInterface as UserCatalogueRepository;
-use App\Repositories\Interfaces\UserRepositoryInterface as UserRepository;
+use App\Services\Interfaces\LanguageServiceInterface;
+use App\Repositories\Interfaces\LanguageRepositoryInterface as LanguageRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class UserCatalogueService
+ * Class LanguageService
  * @package App\Services
  */
-class UserCatalogueService implements UserCatalogueServiceInterface
+class LanguageService implements LanguageServiceInterface
 {
-    protected $userCatalogueRepository;
-    protected $userRepository;
+    protected $languageRepository;
 
-    public function __construct(UserCatalogueRepository $userCatalogueRepository, UserRepository $userRepository)
+    public function __construct(LanguageRepository $languageRepository)
     {
-        $this->userCatalogueRepository = $userCatalogueRepository;
-        $this->userRepository = $userRepository;
+        $this->languageRepository = $languageRepository;
     }
 
     public function paginate($request)
@@ -27,7 +25,7 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         $condition['keyword'] = addslashes($request->input('keyword'));
         $condition['publish'] = $request->integer('publish');
         $perPage = $request->integer('perpage');
-        $users =  $this->userCatalogueRepository->pagination($this->paginateSelect(), $condition, [], ['path' => 'admin/user/index'], $perPage, []);
+        $users =  $this->languageRepository->pagination($this->paginateSelect(), $condition, [], ['path' => 'admin/language/index'], $perPage, []);
         return $users;
     }
 
@@ -36,7 +34,8 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send']);
-            $this->userCatalogueRepository->create($payload);
+            $payload['user_id'] = Auth::id();
+            $this->languageRepository->create($payload);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -51,7 +50,7 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send']);
-            $this->userCatalogueRepository->update($payload, $id);
+            $this->languageRepository->update($payload, $id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -65,7 +64,7 @@ class UserCatalogueService implements UserCatalogueServiceInterface
     {
         DB::beginTransaction();
         try {
-            $this->userCatalogueRepository->delete($id);
+            $this->languageRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -80,8 +79,8 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         DB::beginTransaction();
         try {
             $payload[$post['field']] = (($post['value'] == 1) ? 2 : 1);
-            $this->userCatalogueRepository->update($payload, $post['modelId']);
-            $this->changeUserStatus($post, $payload[$post['field']]);
+            $this->languageRepository->update($payload, $post['modelId']);
+            // $this->changeUserStatus($post, $payload[$post['field']]);
 
             DB::commit();
             return true;
@@ -97,8 +96,8 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         DB::beginTransaction();
         try {
             $payload[$post['field']] = $post['value'];
-            $this->userCatalogueRepository->updateByWhereIn('id', $post['id'], $payload);
-            $this->changeUserStatus($post, $payload[$post['field']]);
+            $this->languageRepository->updateByWhereIn('id', $post['id'], $payload);
+            // $this->changeUserStatus($post, $payload[$post['field']]);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -121,7 +120,7 @@ class UserCatalogueService implements UserCatalogueServiceInterface
 
             $payload[$post['field']] = $value;
 
-            $this->userRepository->updateByWhereIn('user_category_id', $array, $payload);
+            $this->languageRepository->updateByWhereIn('user_category_id', $array, $payload);
 
             DB::commit();
             return true;
@@ -134,6 +133,6 @@ class UserCatalogueService implements UserCatalogueServiceInterface
 
     private function paginateSelect()
     {
-        return ['id', 'name', 'description', 'publish'];
+        return ['id', 'name', 'canonical', 'publish'];
     }
 }

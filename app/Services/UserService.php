@@ -26,7 +26,7 @@ class UserService implements UserServiceInterface
         $condition['keyword'] = addslashes($request->input('keyword'));
         $condition['publish'] = $request->integer('publish');
         $perPage = $request->integer('perpage');
-        $users =  $this->userRepository->pagination($this->paginateSelect(), $condition, [], ['path' => 'admin/user/index'], $perPage);
+        $users =  $this->userRepository->pagination($this->paginateSelect(), $condition, [], ['path' => 'admin/user/index'], $perPage, ['users']);
         return $users;
     }
 

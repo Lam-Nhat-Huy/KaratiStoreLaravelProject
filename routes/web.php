@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\UserCatalogueController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
@@ -45,6 +46,19 @@ Route::prefix('admin')->middleware(AuthenticateMiddleware::class)->group(functio
 
         Route::get('/delete/{id}', [UserCatalogueController::class, 'delete'])->name('user.catalogue.delete')->where(['id' => '[0-9]+']);
         Route::delete('/destroy/{id}', [UserCatalogueController::class, 'destroy'])->name('user.catalogue.destroy')->where(['id' => '[0-9]+']);
+    });
+
+    Route::prefix('language')->group(function () {
+        Route::get('/index', [LanguageController::class, 'index'])->name('language.index');
+
+        Route::get('/create', [LanguageController::class, 'create'])->name('language.create');
+        Route::post('/store', [LanguageController::class, 'store'])->name('language.store');
+
+        Route::get('/edit/{id}', [LanguageController::class, 'edit'])->name('language.edit')->where(['id' => '[0-9]+']);
+        Route::post('/update/{id}', [LanguageController::class, 'update'])->name('language.update')->where(['id' => '[0-9]+']);
+
+        Route::get('/delete/{id}', [LanguageController::class, 'delete'])->name('language.delete')->where(['id' => '[0-9]+']);
+        Route::delete('/destroy/{id}', [LanguageController::class, 'destroy'])->name('language.destroy')->where(['id' => '[0-9]+']);
     });
 });
 

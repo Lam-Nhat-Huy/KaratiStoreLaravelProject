@@ -22,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\WardServiceInterface' => 'App\Services\WardService',
         'App\Repositories\Interfaces\WardRepositoryInterface' => 'App\Repositories\WardRepository',
 
+        'App\Services\Interfaces\LanguageServiceInterface' => 'App\Services\LanguageService',
+        'App\Repositories\Interfaces\LanguageRepositoryInterface' => 'App\Repositories\LanguageRepository',
 
     ];
     /**
