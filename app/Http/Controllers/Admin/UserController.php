@@ -52,6 +52,7 @@ class UserController extends Controller
     public function create()
     {
         $provinces = $this->provinceRepository->all();
+        $userCatalogues = $this->userRepository->getUserCatalogue();
         $template = "admin.user.user.pages.store";
         $config = [
             'css' => [
@@ -71,6 +72,7 @@ class UserController extends Controller
             'template',
             'config',
             'provinces',
+            'userCatalogues'
         ));
     }
 
@@ -86,6 +88,7 @@ class UserController extends Controller
     {
         $users = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->all();
+        $userCatalogues = $this->userRepository->getUserCatalogue();
         $template = "admin.user.user.pages.store";
 
         $config = [
@@ -108,6 +111,7 @@ class UserController extends Controller
             'config',
             'provinces',
             'users',
+            'userCatalogues',
         ));
     }
 

@@ -5,7 +5,7 @@
         <div class="ibox ">
             <div class="ibox-title">
                 <h5>{{ $config['seo']['index']['table'] }}</h5>
-                @include('admin.user.catalogue.components.toolbox')
+                @include('admin.dashboard.components.toolbox', ['model' => 'UserCatalogue'])
             </div>
             @include('admin.user.catalogue.components.filter')
             @include('admin.user.catalogue.components.table')

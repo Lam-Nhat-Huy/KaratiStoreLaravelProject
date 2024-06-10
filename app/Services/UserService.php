@@ -81,7 +81,7 @@ class UserService implements UserServiceInterface
     {
         DB::beginTransaction();
         try {
-            $payload[$post['field']] = (($post['value'] == 1) ? 0 : 1);
+            $payload[$post['field']] = (($post['value'] == 1) ? 2 : 1);
             $this->userRepository->update($payload, $post['modelId']);
             DB::commit();
             return true;
@@ -116,6 +116,6 @@ class UserService implements UserServiceInterface
 
     private function paginateSelect()
     {
-        return ['id', 'name', 'email', 'phone', 'address', 'publish'];
+        return ['id', 'name', 'email', 'phone', 'address', 'publish', 'user_category_id'];
     }
 }

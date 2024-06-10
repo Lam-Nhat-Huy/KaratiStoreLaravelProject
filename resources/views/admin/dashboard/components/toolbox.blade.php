@@ -6,11 +6,11 @@
         <i class="fa fa-wrench"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
-        <li><a href="#" class="dropdown-item changeStatusAll" data-field="publish" data-model="UserCatalogue"
-                data-value="1">Active toàn bộ thành viên</a>
+        <li><a href="#" class="dropdown-item changeStatusAll" data-field="publish" data-model="{{ $model }}"
+                data-value="2">Xuất bảng toàn bộ</a>
         </li>
-        <li><a href="#" class="dropdown-item changeStatusAll" data-field="publish" data-model="UserCatalogue"
-                data-value="0">UnPublish toàn bộ thành viên</a>
+        <li><a href="#" class="dropdown-item changeStatusAll" data-field="publish"
+                data-model="{{ $model }}" data-value="1">Bỏ xuất bảng toàn bộ</a>
         </li>
     </ul>
     <a class="close-link">

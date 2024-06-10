@@ -14,13 +14,11 @@
             </div>
 
             @php
-                $publishArray = ['Không công khai', 'Công khai'];
                 $publish = request('publish') ?: old('publish');
             @endphp
             <div class="action">
                 <select name="publish" class="form-control mr10 setupSelect2">
-                    <option value="-1">Chọn tình trạng</option>
-                    @foreach ($publishArray as $key => $val)
+                    @foreach (config('apps.general.publish') as $key => $val)
                         <option {{ $publish == $key ? 'selected' : '' }} value="{{ $key }}">{{ $val }}
                         </option>
                     @endforeach

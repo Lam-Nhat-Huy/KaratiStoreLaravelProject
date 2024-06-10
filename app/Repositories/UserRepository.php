@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use App\Models\UserCatalogue;
 
 /**
  * Class UserRepository
@@ -27,16 +28,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                     ->orWhere('phone', 'LIKE', '%' . $condition['keyword'] . '%');
             }
 
-            if (isset($condition['publish']) && $condition['publish'] != -1) {
+            if (isset($condition['publish']) && $condition['publish'] != 0) {
                 $query->where('publish', '=', $condition['publish']);
             }
             return $query;
-        });
+        })->with('user_catalogues');
 
         if (!empty($join)) {
             $query->join(...$join);
         }
 
         return $query->paginate($perPage)->withQueryString()->withPath(env('APP_URL') . $extend['path']);
+    }
+
+    public function getUserCatalogue()
+    {
+        $userCatalogue = UserCatalogue::all();
+        return $userCatalogue;
     }
 }

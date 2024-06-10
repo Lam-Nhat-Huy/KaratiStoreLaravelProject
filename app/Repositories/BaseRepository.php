@@ -31,7 +31,7 @@ class BaseRepository implements BaseRepositoryInterface
                 $query->where('name', 'LIKE', '%' . $condition['keyword'] . '%');
             }
 
-            if (isset($condition['publish']) && $condition['publish'] != -1) {
+            if (isset($condition['publish']) && $condition['publish'] != 0) {
                 $query->where('publish', '=', $condition['publish']);
             }
 

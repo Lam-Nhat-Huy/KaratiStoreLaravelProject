@@ -34,7 +34,10 @@
                         data: option,
                         dataType: 'json',
                         success: function(res){
-                            console.log(res);
+                            let inputValue = ((option.value == 1) ? 2 : 1);
+                            if (res.flag == true) {
+                                _this.val(inputValue)
+                            }
                         },
                         error: function(jqXHR, textStatus, erorThrowm){
                             console.log('Lỗi: ' + textStatus + '' + erorThrowm);
@@ -115,9 +118,9 @@
                                 let cssUnactive2 = 'left: 0px; transition: background-color 0.4s ease 0s, left 0.2s ease 0s;'
 
                                     for (let i = 0; i < id.length; i++) {
-                                        if (option.value == 1) {
+                                        if (option.value == 2) {
                                             $('.js-switch-' + id[i]).find('span.switchery').attr('style', cssActive1).find('small').attr('style', cssActive2)
-                                        } else if (option.value == 0) {
+                                        } else if (option.value == 1) {
                                             $('.js-switch-' + id[i]).find('span.switchery').attr('style', cssUnactive1).find('small').attr('style', cssUnactive2)
                                         }
                                     }
