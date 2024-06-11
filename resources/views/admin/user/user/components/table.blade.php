@@ -4,6 +4,7 @@
             <th class="text-center">
                 <input type="checkbox" id="checkAll" class="input-checkbox" value="">
             </th>
+            <th>Ảnh đại diện</th>
             <th>Họ tên</th>
             <th>Email</th>
             <th>Số điện thoại</th>
@@ -19,6 +20,9 @@
                 <tr>
                     <td class="text-center">
                         <input type="checkbox" class="input-checkbox checkBoxItem" value="{{ $user->id }}">
+                    </td>
+                    <td>
+                        <img src="{{ $user->image }}" width="60px" alt="">
                     </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>

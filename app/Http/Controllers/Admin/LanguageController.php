@@ -48,8 +48,17 @@ class LanguageController extends Controller
     public function create()
     {
         $template = "admin.language.pages.store";
-        $config['seo'] = config('apps.language');
+
+        $config = [
+            'js' => [
+                '/admin/plugins/ckfinder_2/ckfinder.js',
+                '/admin/lib/finder.js',
+            ]
+        ];
+
         $config['method'] = 'create';
+        $config['seo'] = config('apps.language');
+
         return view('admin.dashboard.layout', compact(
             'template',
             'config',
@@ -75,7 +84,8 @@ class LanguageController extends Controller
             ],
             'js' => [
                 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
-                '/admin/plugin/ckfinder/ckfinder.js',
+                '/admin/plugins/ckfinder_2/ckfinder.js',
+                '/admin/lib/finder.js',
                 '/admin/lib/location.js',
             ]
         ];

@@ -59,9 +59,11 @@
                             <div class="row mb10">
                                 <div class="col-lg-6">
                                     <div class="form-row">
-                                        <label for="" class="control-label text-right">Ảnh đại diện</label>
-                                        <input value="{{ old('image', $languages->image ?? '') }}" type="text"
-                                            name="image" class="form-control" placeholder="" autocomplete="off">
+                                        <label for="" class="control-label text-left">Ảnh đại diện</label>
+                                        <input type="text" name="image"
+                                            value="{{ old('image', $language->image ?? '') }}"
+                                            class="form-control upload-image" placeholder="" autocomplete="off"
+                                            data-type="Images">
                                     </div>
                                 </div>
 

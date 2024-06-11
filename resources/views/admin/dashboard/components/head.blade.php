@@ -15,3 +15,7 @@
         {!! '<link rel="stylesheet" href="' . $value . '">' !!}
     @endforeach
 @endif
+
+<script>
+    var BASE_URL = 'http://localhost:8000/'
+</script>

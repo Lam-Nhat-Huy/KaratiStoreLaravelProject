@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\UserCatalogueController;
+use App\Http\Controllers\Admin\PostCatalogueController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -59,6 +60,20 @@ Route::prefix('admin')->middleware(AuthenticateMiddleware::class)->group(functio
 
         Route::get('/delete/{id}', [LanguageController::class, 'delete'])->name('language.delete')->where(['id' => '[0-9]+']);
         Route::delete('/destroy/{id}', [LanguageController::class, 'destroy'])->name('language.destroy')->where(['id' => '[0-9]+']);
+    });
+
+    Route::prefix('post/catalogue')->group(function () {
+        Route::get('/index', [PostCatalogueController::class, 'index'])->name('post.catalogue.index');
+        Route::get('/heal', [PostCatalogueController::class, 'healthy_testing'])->name('post.catalogue.healthy_testing');
+
+        Route::get('/create', [PostCatalogueController::class, 'create'])->name('post.catalogue.create');
+        Route::post('/store', [PostCatalogueController::class, 'store'])->name('post.catalogue.store');
+
+        Route::get('/edit/{id}', [PostCatalogueController::class, 'edit'])->name('post.catalogue.edit')->where(['id' => '[0-9]+']);
+        Route::post('/update/{id}', [PostCatalogueController::class, 'update'])->name('post.catalogue.update')->where(['id' => '[0-9]+']);
+
+        Route::get('/delete/{id}', [PostCatalogueController::class, 'delete'])->name('post.catalogue.delete')->where(['id' => '[0-9]+']);
+        Route::delete('/destroy/{id}', [PostCatalogueController::class, 'destroy'])->name('post.catalogue.destroy')->where(['id' => '[0-9]+']);
     });
 });
 

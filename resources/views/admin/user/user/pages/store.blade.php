@@ -116,12 +116,15 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-row">
-                                        <label for="" class="control-label text-right">Ảnh đại diện</label>
-                                        <input type="text" name="image" class="form-control input-image"
-                                            data-upload="Images" placeholder="" autocomplete="off">
+                                        <label for="" class="control-label text-left">Ảnh đại diện</label>
+                                        <input type="text" name="image"
+                                            value="{{ old('image', $language->image ?? '') }}"
+                                            class="form-control upload-image" placeholder="" autocomplete="off"
+                                            data-type="Images">
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

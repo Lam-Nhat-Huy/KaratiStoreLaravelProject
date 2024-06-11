@@ -42,3 +42,11 @@ Lưu ý: nhớ đăng ký service trong AppServiceProvider
 
 - Hàm public function create(array $payload = []) ở UserRepository thi phải được khai báo ở UserRepositoryInterface
 
+- Qui trình tạo 1 chức năng
++ Tạo controller
++ Tạo Model
++ Tạo Service
++ Tạo Repository
++ config
++ Request
++ view
