@@ -17,5 +17,6 @@
 @endif
 
 <script>
-    var BASE_URL = 'http://localhost:8000/'
+    var BASE_URL = '{{ config('app.url') }}'
+    var SUFFIX = '{{ config('apps.general.suffix') }}'
 </script>

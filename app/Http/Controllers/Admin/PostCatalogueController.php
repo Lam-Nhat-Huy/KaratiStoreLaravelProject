@@ -7,16 +7,24 @@ use App\Http\Requests\StorePostCatalogueRequest;
 use App\Services\Interfaces\PostCatalogueServiceInterface as PostCatalogueService;
 use App\Repositories\Interfaces\PostCatalogueRepositoryInterface as PostCatalogueRepository;
 use Illuminate\Http\Request;
+use App\Classes\Nestedsetbie;
 
 class PostCatalogueController extends Controller
 {
     protected $postCatalogueService;
     protected $postCatalogueRepository;
+    protected $nestedset;
+
 
     public function __construct(PostCatalogueService $postCatalogueService, PostCatalogueRepository $postCatalogueRepository)
     {
         $this->postCatalogueService = $postCatalogueService;
         $this->postCatalogueRepository = $postCatalogueRepository;
+        $this->nestedset = new Nestedsetbie([
+            'table' => 'post_catalogues',
+            'foreignkey' => 'post_catalogue_id',
+            'language_id' => 11
+        ]);
     }
 
     public function index(Request $request)
@@ -56,14 +64,17 @@ class PostCatalogueController extends Controller
                 '/admin/plugins/ckeditor/ckeditor.js',
                 '/admin/plugins/ckfinder_2/ckfinder.js',
                 '/admin/lib/finder.js',
+                '/admin/lib/seo.js',
             ]
         ];
 
+        $dropdown = $this->nestedset->Dropdown();
         $config['seo'] = config('apps.postCatalogue');
         $config['method'] = 'create';
         return view('admin.dashboard.layout', compact(
             'template',
             'config',
+            'dropdown',
         ));
     }
 

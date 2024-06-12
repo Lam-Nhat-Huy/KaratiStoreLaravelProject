@@ -81,4 +81,9 @@ class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->whereIn($whereInField, $whereIn)->update($payload);
     }
+
+    public function createLanguagePivot($model, array $payload = [])
+    {
+        return $model->languages()->attach($model->id, $payload); // hàm language được trỏ từ model ra
+    }
 }

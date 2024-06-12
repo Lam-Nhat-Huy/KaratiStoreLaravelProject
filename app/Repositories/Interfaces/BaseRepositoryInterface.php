@@ -16,4 +16,5 @@ interface BaseRepositoryInterface
     public function findById(int $modelId, array $column = ['*'], array $relation = []);
     public function update(array $payload = [], int $id = 0);
     public function updateByWhereIn(string $whereInField, array $whereIn = [], array $payload);
+    public function createLanguagePivot($model, array $payload = []);
 }

@@ -3,21 +3,30 @@
 namespace App\Services;
 
 use App\Services\Interfaces\PostCatalogueServiceInterface;
+use App\Services\Interfaces\BaseServiceInterface;
 use App\Repositories\Interfaces\PostCatalogueRepositoryInterface as PostCatalogueRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Classes\Nestedsetbie;
+
 
 /**
  * Class PostCatalogueService
  * @package App\Services
  */
-class PostCatalogueService implements PostCatalogueServiceInterface
+class PostCatalogueService extends BaseService implements PostCatalogueServiceInterface
 {
     protected $postCatalogueRepository;
-    protected $pRepository;
+    protected $nestedset;
 
     public function __construct(PostCatalogueRepository $postCatalogueRepository)
     {
         $this->postCatalogueRepository = $postCatalogueRepository;
+        $this->nestedset = new Nestedsetbie([
+            'table' => 'post_catalogues',
+            'foreignkey' => 'post_catalogue_id',
+            'language_id' => $this->currentLanguage()
+        ]);
     }
 
     public function paginate($request)
@@ -33,8 +42,21 @@ class PostCatalogueService implements PostCatalogueServiceInterface
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send']);
-            $this->postCatalogueRepository->create($payload);
+            $payload = $request->only($this->payload());
+            $payload['user_id'] = Auth::id();
+            $postCatalogue = $this->postCatalogueRepository->create($payload);
+
+            if ($postCatalogue->id > 0) {
+                $payloadLanguage = $request->only($this->payloadLanguage());
+                $payloadLanguage['language_id'] = $this->currentLanguage();
+                $payloadLanguage['post_catalogue_id'] = $postCatalogue->id;
+                $this->postCatalogueRepository->createLanguagePivot($postCatalogue, $payloadLanguage); // warning
+            }
+
+            $this->nestedset->Get('level ASC, order ASC');
+            $this->nestedset->Recursive(0, $this->nestedset->Set());
+            $this->nestedset->Action();
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -119,7 +141,7 @@ class PostCatalogueService implements PostCatalogueServiceInterface
 
             $payload[$post['field']] = $value;
 
-            $this->pRepository->updateByWhereIn('user_category_id', $array, $payload);
+            $this->postCatalogueRepository->updateByWhereIn('user_category_id', $array, $payload);
 
             DB::commit();
             return true;
@@ -132,6 +154,16 @@ class PostCatalogueService implements PostCatalogueServiceInterface
 
     private function paginateSelect()
     {
-        return ['id', 'name', 'description', 'publish'];
+        return ['id'];
+    }
+
+    private function payload()
+    {
+        return ['parent_id', 'follow', 'publish', 'image'];
+    }
+
+    private function payloadLanguage()
+    {
+        return ['name', 'description', 'content', 'meta_title', 'meta_description', 'meta_keyword', 'canonical'];
     }
 }

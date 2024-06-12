@@ -7,13 +7,13 @@
                             class="text-danger">(*)</span></label>
                     <span class="text-danger notice">Chọn Root nếu không có danh mục cha</span>
 
-                    <select name="" class="form-control setupSelect2" id="">
-                        <option value="0">Chọn danh mục cha</option>
-                        <option value="1">Root</option>
-                        <option value="2">...</option>
+                    <select name="parent_id" class="form-control setupSelect2" id="">
+                        @foreach ($dropdown as $key => $value)
+                            <option value="{{ $key }}">{{ $value }}</option>
+                        @endforeach
                     </select>
 
-                    @error('name')
+                    @error('parent_id')
                         <label id="firstname-error" class="error mt-2 text-danger"
                             for="firstname">{{ $message }}</label>
                     @enderror
@@ -27,15 +27,19 @@
     <div class="ibox-title">
         <h5>Chọn ảnh đại diện</h5>
     </div>
-    <div class="ibox-content">
+    <div class="ibox-content text-center">
         <div class="row mb10">
             <div class="col-lg-12">
                 <div class="form-row">
-                    <span class="image img-fluid ">
-                        <img src="/admin/img/no-img.jpg" alt="">
-                        <input type="hidden" name="image" value="">
+                    <span class="image img-fluid image-target">
+                        <img src="{{ old('image', $postCatalogue->image ?? '/admin/img/no-img3.jpg') }}" alt=""
+                            class="image img-thumbnail">
+                        <input type="hidden" name="image" value="{{ old('image', $postCatalogue->image ?? '') }}"
+                            class="upload-image form-control" data-type="Images">
                     </span>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -50,23 +54,23 @@
                     </label>
 
                     <div class="mb10">
-                        <select name="" class="form-control setupSelect2" id="">
+                        <select name="publish" class="form-control setupSelect2" id="">
                             @foreach (config('apps.general.publish') as $key => $value)
-                                <option value="{{ $key }}">{{ $value }}</option>
+                                <option
+                                    {{ $key == old('publish', isset($postCatalogue->publish) ? $postCatalogue->publish : '') ? 'selected' : '' }}
+                                    value="{{ $key }}">{{ $value }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
-                    <select name="" class="form-control setupSelect2" id="">
+                    <select name="follow" class="form-control setupSelect2" id="">
                         @foreach (config('apps.general.follow') as $key => $value)
-                            <option value="{{ $key }}">{{ $value }}</option>
+                            <option
+                                {{ $key == old('follow', isset($postCatalogue->follow) ? $postCatalogue->follow : '') ? 'selected' : '' }}
+                                value="{{ $key }}">{{ $value }}</option>
                         @endforeach
                     </select>
-
-                    @error('name')
-                        <label id="firstname-error" class="error mt-2 text-danger"
-                            for="firstname">{{ $message }}</label>
-                    @enderror
                 </div>
             </div>
         </div>

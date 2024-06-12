@@ -117,7 +117,7 @@
 }
 .canonical{
     color:green;
-    margin-bottom:8px;
+    font-size: 12px;
 }
 .meta-description{
     font-size:14px;
@@ -134,5 +134,14 @@
     font-style: italic;
     display: block;
     margin-bottom:10px;
+}
 
+.image-target{
+    cursor: pointer;
+}
+
+.button-fix{
+    position: fixed;
+    bottom:30px;
+    right:30px;
 }

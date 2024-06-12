@@ -9,5 +9,6 @@ return [
         '0' => 'Chọn điều hướng',
         '1' => 'No Follow',
         '2' => 'Follow',
-    ]
+    ],
+    'suffix' => '.html'
 ];

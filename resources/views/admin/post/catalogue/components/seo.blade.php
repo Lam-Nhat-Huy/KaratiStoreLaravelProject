@@ -5,16 +5,15 @@
     <div class="ibox-content">
         <div class="seo-container">
             <div class="meta-title">
-                Lộ trình học Laravel từ A – Z cho người mới - CodeGym
+                {{ old('meta_title') ?? 'Bạn chưa có tiêu đề SEO' }}
             </div>
 
             <div class="canonical">
-                https://nhathuy2004.id.vn/
+                {{ old('canonical') ? config('app.url') . old('canonical') . config('apps.general.suffix') : 'https://duong-dan-cua-ban.html' }}
             </div>
 
             <div class="meta-description">
-                Học Laravel từ A đến Z giúp tối ưu hóa việc lập trình cũng như quản lý source code .
-                Thực chất, Laravel là Framework PHP đã được nhiều lập trình viên đánh giá ...
+                {{ old('Bạn chưa có mô tả SEO') ?? 'Bạn chưa có mô tả SEO' }}
             </div>
         </div>
 
@@ -24,7 +23,7 @@
                     <div class="row mb10">
                         <div class="col-lg-12">
                             <div class="form-row">
-                                <label for="" class="control-label text-lefy">Tiêu đề SEO
+                                <label for="" class="control-label text-left">Tiêu đề SEO
                                     <span class="text-danger" class="count_meta-title">0
                                         ký
                                         tự</span>
@@ -43,7 +42,7 @@
                     <div class="row mb10">
                         <div class="col-lg-12">
                             <div class="form-row">
-                                <label for="" class="control-label text-lefy">Từ khóa SEO
+                                <label for="" class="control-label text-left">Từ khóa SEO
                                 </label>
                                 <input value="{{ old('meta_keyword', $postCatalogue->meta_keyword ?? '') }}"
                                     type="text" name="meta_keyword" class="form-control" placeholder=""
@@ -60,13 +59,13 @@
                     <div class="row mb10">
                         <div class="col-lg-12">
                             <div class="form-row">
-                                <label for="" class="control-label text-lefy">Mô tả SEO
+                                <label for="" class="control-label text-left">Mô tả SEO
                                     <span class="text-danger" class="count_meta-description">0
                                         ký
                                         tự</span>
                                 </label>
 
-                                <textarea name="meta_description" class="form-control"></textarea>
+                                <textarea name="meta_description" class="form-control">{{ old('meta_description', $postCatalogue->meta_description ?? '') }}</textarea>
 
                                 @error('meta_description')
                                     <label id="firstname-error" class="error mt-2 text-danger"
@@ -79,16 +78,20 @@
                     <div class="row mb10">
                         <div class="col-lg-12">
                             <div class="form-row">
-                                <label for="" class="control-label text-lefy">Đường dẫn
+                                <label for="" class="control-label text-left">
+                                    <span>Đường dẫn <span class="text-danger">(*)</span></span>
                                 </label>
+                                <div class="input-wrapper">
+                                    <input type="text" name="canonical"
+                                        value="{{ old('canonical', $postCatalogue->canonical ?? '') }}"
+                                        class="form-control canonical" autocomplete="off"
+                                        placeholder="Chỉ cần nhập tên trang ví dụ: trang-chu">
 
-                                <input value="{{ old('canonical', $postCatalogue->canonical ?? '') }}" type="text"
-                                    name="canonical" class="form-control" placeholder="" autocomplete="off">
-
-                                @error('canonical')
-                                    <label id="firstname-error" class="error mt-2 text-danger"
-                                        for="firstname">{{ $message }}</label>
-                                @enderror
+                                    @error('canonical')
+                                        <label id="firstname-error" class="error mt-2 text-danger"
+                                            for="firstname">{{ $message }}</label>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
