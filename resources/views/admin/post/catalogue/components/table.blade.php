@@ -4,7 +4,7 @@
             <th class="text-center">
                 <input type="checkbox" id="checkAll" class="input-checkbox" value="">
             </th>
-            <th>Tên nhóm thành viên</th>
+            <th>Tên nhóm</th>
             <th>Tình trạng</th>
             <th>Thao tác</th>
         </tr>
@@ -16,7 +16,8 @@
                     <td class="text-center">
                         <input type="checkbox" class="input-checkbox checkBoxItem" value="{{ $postCatalogue->id }}">
                     </td>
-                    <td>{{ $postCatalogue->name }}</td>
+                    <td> {{ str_repeat('|----', $postCatalogue->level > 0 ? $postCatalogue->level - 1 : 0) . $postCatalogue->name }}
+                    </td>
                     <td class="js-switch-{{ $postCatalogue->id }}">
                         <input type="checkbox" value="{{ $postCatalogue->publish }}" class="js-switch status "
                             data-field="publish" data-model="PostCatalogue"

@@ -24,7 +24,7 @@ class BaseRepository implements BaseRepositoryInterface
         $this->model = $model;
     }
 
-    public function pagination(array $column = ['*'], array $condition = [], array $join = [], array $extend = [], int $perPage = 10)
+    public function pagination(array $column = ['*'], array $condition = [], array $join = [], array $extend = [], int $perPage = 10, array $relations = [], array $orderBy = [], array $where = [])
     {
         $query = $this->model->select($column)->where(function ($query) use ($condition) {
             if (isset($condition['keyword']) && !empty($condition['keyword'])) {
@@ -38,8 +38,20 @@ class BaseRepository implements BaseRepositoryInterface
             return $query;
         });
 
-        if (!empty($join)) {
-            $query->join(...$join);
+        if (isset($join) && is_array($join) && count($join)) {
+            foreach ($join as $key => $value) {
+                $query->join($value[0], $value[1], $value[2], $value[3]);
+            }
+        }
+
+        if (isset($orderBy) && !empty($orderBy)) {
+            $query->orderBy($orderBy[0], $orderBy[1]);
+        }
+
+        if (isset($condition['where']) && count($condition['where'])) {
+            foreach ($condition['where'] as $key => $value) {
+                $query->where($value[0], $value[1], $value[2]);
+            }
         }
 
         return $query->paginate($perPage)->withQueryString()->withPath(env('APP_URL') . $extend['path']);

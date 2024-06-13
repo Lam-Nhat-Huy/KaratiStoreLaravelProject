@@ -14,7 +14,7 @@ class PostCatalogueController extends Controller
     protected $postCatalogueService;
     protected $postCatalogueRepository;
     protected $nestedset;
-
+    protected $language;
 
     public function __construct(PostCatalogueService $postCatalogueService, PostCatalogueRepository $postCatalogueRepository)
     {
@@ -25,6 +25,7 @@ class PostCatalogueController extends Controller
             'foreignkey' => 'post_catalogue_id',
             'language_id' => 11
         ]);
+        $this->language = $this->currentLanguage();
     }
 
     public function index(Request $request)
@@ -88,8 +89,9 @@ class PostCatalogueController extends Controller
 
     public function edit($id)
     {
-        $postCatalogue = $this->postCatalogueRepository->findById($id);
+        $postCatalogue = $this->postCatalogueRepository->getPostCatalogueById($id, $this->language);
         $template = "admin.post.catalogue.pages.store";
+        $dropdown = $this->nestedset->Dropdown();
 
         $config = [
             'css' => [
@@ -97,12 +99,13 @@ class PostCatalogueController extends Controller
             ],
             'js' => [
                 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
-                '/admin/plugin/ckfinder/ckfinder.js',
-                '/admin/lib/location.js',
+                '/admin/plugins/ckeditor/ckeditor.js',
+                '/admin/plugins/ckfinder_2/ckfinder.js',
+                '/admin/lib/finder.js',
             ]
         ];
 
-        $config['seo'] = config('apps.user');
+        $config['seo'] = config('apps.postCatalogue');
         $config['method'] = 'edit';
 
 
@@ -110,11 +113,13 @@ class PostCatalogueController extends Controller
             'template',
             'config',
             'postCatalogue',
+            'dropdown',
         ));
     }
 
     public function update(Request $request, $id)
     {
+        // dd($this->postCatalogueService->update($request, $id));
         if ($this->postCatalogueService->update($request, $id)) {
             return redirect()->route('post.catalogue.index')->with('success', 'Cập nhật bảng ghi thành công');
         }

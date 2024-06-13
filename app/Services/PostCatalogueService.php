@@ -18,14 +18,16 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
 {
     protected $postCatalogueRepository;
     protected $nestedset;
+    protected $language;
 
     public function __construct(PostCatalogueRepository $postCatalogueRepository)
     {
         $this->postCatalogueRepository = $postCatalogueRepository;
+        $this->language = $this->currentLanguage();
         $this->nestedset = new Nestedsetbie([
             'table' => 'post_catalogues',
             'foreignkey' => 'post_catalogue_id',
-            'language_id' => $this->currentLanguage()
+            'language_id' => $this->language
         ]);
     }
 
@@ -33,9 +35,22 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
     {
         $condition['keyword'] = addslashes($request->input('keyword'));
         $condition['publish'] = $request->integer('publish');
-        $perPage = $request->integer('perpage');
-        $users =  $this->postCatalogueRepository->pagination($this->paginateSelect(), $condition, [], ['path' => 'admin/user/index'], $perPage, []);
-        return $users;
+        $condition['where'] = [
+            ['tb2.language_id', '=', $this->language]
+        ];
+        $perPage = 10;
+        $postCatalogue =  $this->postCatalogueRepository->pagination(
+            $this->paginateSelect(),
+            $condition,
+            [['post_catalogue_language as tb2', 'tb2.post_catalogue_id', '=', 'post_catalogues.id']],
+            ['path' => ''],
+            $perPage,
+            [],
+            [
+                'post_catalogues.lft', 'asc'
+            ]
+        );
+        return $postCatalogue;
     }
 
     public function create($request)
@@ -70,8 +85,24 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send']);
-            $this->postCatalogueRepository->update($payload, $id);
+            $postCatalogue = $this->postCatalogueRepository->findById($id);
+            $payload = $request->only($this->payload());
+            $flag = $this->postCatalogueRepository->update($payload, $id);
+
+            if ($flag === TRUE) {
+                $payloadLanguage = $request->only($this->payloadLanguage());
+                $payloadLanguage['language_id'] = $this->currentLanguage();
+                $payloadLanguage['post_catalogue_id'] = $id;
+                $postCatalogue->languages()->detach([
+                    $payloadLanguage['language_id'],
+                    $id
+                ]);
+                $reponse = $this->postCatalogueRepository->createLanguagePivot($postCatalogue, $payloadLanguage);
+                $this->nestedset->Get('level ASC, order ASC');
+                $this->nestedset->Recursive(0, $this->nestedset->Set());
+                $this->nestedset->Action();
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -154,7 +185,15 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
 
     private function paginateSelect()
     {
-        return ['id'];
+        return [
+            'post_catalogues.id',
+            'tb2.name',
+            'tb2.canonical',
+            'post_catalogues.publish',
+            'post_catalogues.image',
+            'post_catalogues.level',
+            'post_catalogues.order',
+        ];
     }
 
     private function payload()

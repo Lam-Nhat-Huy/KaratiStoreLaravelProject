@@ -9,7 +9,11 @@
 
                     <select name="parent_id" class="form-control setupSelect2" id="">
                         @foreach ($dropdown as $key => $value)
-                            <option value="{{ $key }}">{{ $value }}</option>
+                            <option
+                                {{ $key == old('parent_id', isset($postCatalogue->parent_id) ? $postCatalogue->parent_id : '') ? 'selected' : '' }}
+                                value="{{ $key }}">
+                                {{ $value }}
+                            </option>
                         @endforeach
                     </select>
 
@@ -34,14 +38,13 @@
                     <span class="image img-fluid image-target">
                         <img src="{{ old('image', $postCatalogue->image ?? '/admin/img/no-img3.jpg') }}" alt=""
                             class="image img-thumbnail">
-                        <input type="hidden" name="image" value="{{ old('image', $postCatalogue->image ?? '') }}"
+                        <input type="text" name="image" value="{{ old('image', $postCatalogue->image ?? '') }}"
                             class="upload-image form-control" data-type="Images">
                     </span>
                 </div>
-
-
             </div>
         </div>
+
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-@include('admin.dashboard.components.breadcrumb', ['title' => $config['seo']['create']['title']])
+@include('admin.dashboard.components.breadcrumb', ['title' => $config['seo'][$config['method']]['title']])
 
 @php
     $url =
