@@ -93,7 +93,7 @@ class PostCatalogueController extends Controller
         $postCatalogue = $this->postCatalogueRepository->getPostCatalogueById($id, $this->language);
         $template = "admin.post.catalogue.pages.store";
         $dropdown = $this->nestedset->Dropdown();
-
+        $album = json_decode($postCatalogue->album);
         $config = [
             'css' => [
                 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
@@ -115,6 +115,7 @@ class PostCatalogueController extends Controller
             'config',
             'postCatalogue',
             'dropdown',
+            'album'
         ));
     }
 

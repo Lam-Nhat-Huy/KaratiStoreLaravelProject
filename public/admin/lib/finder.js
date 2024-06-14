@@ -3,8 +3,8 @@
     var HT = {}
 
     HT.setupCkeditor = () => {
-        if($('.ck-editor')){
-            $('.ck-editor').each(function(){
+        if ($('.ck-editor')) {
+            $('.ck-editor').each(function () {
                 let editor = $(this)
                 let elementId = editor.attr('id')
                 let elementHeight = editor.attr('data-height')
@@ -13,8 +13,40 @@
         }
     }
 
+    HT.multipleUploadImageCkeditor = () => {
+        $(document).on('click', '.multipleUploadImageCkeditor', function (e) {
+            let object = $(this)
+            let type = 'Images'
+            let target = object.attr('data-target')
+            HT.browseServerCkeditor(object, type, target)
+            e.preventDefault()
+        })
+    }
+
+    HT.browseServerCkeditor = (object, type, target) => {
+        if (typeof (type) == 'undefined') {
+            type = 'Images';
+        }
+        var finder = new CKFinder();
+
+        finder.resourceType = type;
+        finder.selectActionFunction = function (fileUrl, data, allFiles) {
+            let html = '';
+            for (var i = 0; i < allFiles.length; i++) {
+                var image = allFiles[i].url
+                html += '<div class="image-content"><figure>'
+                html += '<img src="' + image + '" alt="' + image + '">'
+                html += '<figcaption>Nhập vào mô tả cho ảnh</figcaption>'
+                html += '</figure></div>';
+            }
+            CKEDITOR.instances[target].insertHtml(html)
+        }
+        finder.popup();
+    }
+
+
     HT.ckeditor4 = (elementId, elementHeight) => {
-        if(typeof(elementHeight) == 'undefined'){
+        if (typeof (elementHeight) == 'undefined') {
             elementHeight = 500;
         }
         CKEDITOR.replace(elementId, {
@@ -23,15 +55,15 @@
             entities: true,
             allowedContent: true,
             toolbarGroups: [
-                { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker','undo' ] },
+                { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'undo'] },
                 { name: 'links' },
                 { name: 'insert' },
                 { name: 'forms' },
                 { name: 'tools' },
-                { name: 'document',    groups: [ 'mode', 'document', 'doctools'] },
+                { name: 'document', groups: ['mode', 'document', 'doctools'] },
                 { name: 'others' },
-                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup','colors','styles','indent'  ] },
-                { name: 'paragraph',   groups: [ 'list', '', 'blocks', 'align', 'bidi' ] },
+                { name: 'basicstyles', groups: ['basicstyles', 'cleanup', 'colors', 'styles', 'indent'] },
+                { name: 'paragraph', groups: ['list', '', 'blocks', 'align', 'bidi'] },
             ],
             removeButtons: 'Save,NewPage,Pdf,Preview,Print,Find,Replace,CreateDiv,SelectAll,Symbol,Block,Button,Language',
             removePlugins: "exportpdf",
@@ -39,20 +71,20 @@
     }
 
     HT.uploadImageAvatar = () => {
-        $('.image-target').click(function(){
+        $('.image-target').click(function () {
             let input = $(this)
             let type = 'Images';
-            HT.browseServerAvatar(input, type); 
+            HT.browseServerAvatar(input, type);
         })
     }
 
     HT.browseServerAvatar = (object, type) => {
-        if(typeof(type) == 'undefined'){
+        if (typeof (type) == 'undefined') {
             type = 'Images';
         }
         var finder = new CKFinder();
         finder.resourceType = type;
-        finder.selectActionFunction = function(fileUrl, data) {
+        finder.selectActionFunction = function (fileUrl, data) {
             object.find('img').attr('src', fileUrl)
             object.find('input[type="text"]').val(fileUrl)
         }
@@ -68,20 +100,75 @@
     }
 
     HT.setupCkFinder2 = (object, type) => {
-        if(typeof(type) == 'undefined'){
+        if (typeof (type) == 'undefined') {
             type = 'Images';
         }
         var finder = new CKFinder();
         finder.resourceType = type;
-        finder.selectActionFunction = function(fileUrl, data) {
+        finder.selectActionFunction = function (fileUrl, data) {
             object.val(fileUrl)
         }
         finder.popup();
     }
 
-    $(document).ready(function (){
+    HT.uploadAlbum = () => {
+        $(document).on('click', '.upload-picture', function (e) {
+            HT.browseServerAlbum()
+            e.preventDefault();
+        })
+    }
+
+    HT.browseServerAlbum = () => {
+        var type = 'Images';
+        var finder = new CKFinder();
+
+        finder.resourceType = type;
+        finder.selectActionFunction = function (fileUrl, data, allFiles) {
+            // Xóa các mục <li> trống
+            $('#sortable').empty();
+            
+            let html = '';
+            for (var i = 0; i < allFiles.length; i++) {
+                var image = allFiles[i].url;
+                html += '<li class="ui-state-default">';
+                html += ' <div class="thumb">';
+                html += ' <span class="span image img-scaledown">';
+                html += '<img src="' + image + '" alt="' + image + '">';
+                html += '<input type="hidden" name="album[]" value="' + image + '">';
+                html += '</span>';
+                html += '<button class="delete-image"><i class="fa fa-trash"></i></button>';
+                html += '</div>';
+                html += '</li>';
+            }
+
+            $('.click-to-upload').addClass('hidden');
+            $('#sortable').append(html);
+            $('.upload-list').removeClass('hidden');
+        }
+        finder.popup();
+    }
+
+
+    HT.deletePicture = () => {
+        $(document).on('click', '.delete-image', function (e) {
+            let _this = $(this)
+            _this.closest('.ui-state-default').remove()
+
+            if ($('.ui-state-default').length === 0) {
+                $('.click-to-upload').removeClass('hidden');
+                $('.upload-list').addClass('hidden');
+            }
+
+            e.preventDefault()
+        })
+    }
+
+    $(document).ready(function () {
         HT.uploadImageToInput()
         HT.setupCkeditor()
         HT.uploadImageAvatar()
+        HT.multipleUploadImageCkeditor()
+        HT.uploadAlbum()
+        HT.deletePicture()
     })
 })(jQuery)

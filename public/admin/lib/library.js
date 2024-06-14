@@ -134,6 +134,11 @@
             }
         }
 
+        HT.sortui = () => {
+            $('#sortable').sortable()
+            $('#sortable').disableSelection()
+        }
+
         $(document).ready(function (){
             HT.swicthery()
             HT.select2()
@@ -142,6 +147,7 @@
             HT.checkBoxItem()
             HT.allChecked()
             HT.changeStatusAll()
+            HT.sortui()
         })
     }
 )(jQuery)

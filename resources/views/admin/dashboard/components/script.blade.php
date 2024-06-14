@@ -5,6 +5,7 @@
     <script src="{{ asset('admin') }}/js/plugins/pace/pace.min.js"></script>
     <script src="{{ asset('admin') }}/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="{{ asset('admin') }}/lib/library.js"></script>
+    <script src="{{ asset('admin') }}/plugins/jquery-ui.js"></script>
     {{-- <script src="{{ asset('admin') }}/lib/location.js"></script> --}}
 
 

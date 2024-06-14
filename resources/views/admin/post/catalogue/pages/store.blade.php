@@ -19,6 +19,7 @@
                         </div>
                         <div class="ibox-content">
                             @include('admin.post.catalogue.components.general')
+                            @include('admin.dashboard.components.album')
                             @include('admin.post.catalogue.components.seo')
                         </div>
                     </div>

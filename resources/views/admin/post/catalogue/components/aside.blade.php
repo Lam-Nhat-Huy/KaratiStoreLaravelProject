@@ -1,10 +1,11 @@
 <div class="ibox ">
+    <div class="ibox-title">
+        <h5>Chọn danh mục cha</h5>
+    </div>
     <div class="ibox-content">
         <div class="row mb10">
             <div class="col-lg-12">
                 <div class="form-row">
-                    <label for="" class="control-label text-right">Chọn danh mục cha<span
-                            class="text-danger">(*)</span></label>
                     <span class="text-danger notice">Chọn Root nếu không có danh mục cha</span>
 
                     <select name="parent_id" class="form-control setupSelect2" id="">
@@ -49,13 +50,13 @@
 </div>
 
 <div class="ibox ">
+    <div class="ibox-title">
+        <h5>Cấu hình nâng cao</h5>
+    </div>
     <div class="ibox-content">
         <div class="row mb10">
             <div class="col-lg-12">
                 <div class="form-row">
-                    <label for="" class="control-label text-right">Cấu hình nâng cao
-                    </label>
-
                     <div class="mb10">
                         <select name="publish" class="form-control setupSelect2" id="">
                             @foreach (config('apps.general.publish') as $key => $value)
