@@ -9,7 +9,7 @@
                     <div class="panel-head">
                         <div class="panel-title">Thông tin chung</div>
                         <div class="panel-description">
-                            <p>Bạn đang muốn xóa nhóm thành viên có tên là: <strong>{{ $postCatalogue->email }}</strong>
+                            <p>Bạn đang muốn xóa nhóm bài viết có tên là: <strong>{{ $postCatalogue->email }}</strong>
                             </p>
                             <p>Lưu ý: Không thể khôi phục thành viên sao khi xóa. Hãy chắc chắn khi muốn thực hiện chức
                                 năng này</p>
@@ -21,12 +21,12 @@
                     <div class="ibox">
                         <div class="ibox-content">
                             <div class="row mb10">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-row">
-                                        <label for="" class="control-label text-right">Tên nhóm thành viên <span
+                                        <label for="" class="control-label text-right">Tên nhóm bài viết <span
                                                 class="text-danger">(*)</span></label>
                                         <input value="{{ old('name', $postCatalogue->name ?? '') }}" type="text"
-                                            name="text" class="form-control" placeholder="" autocomplete="off"
+                                            name="name" class="form-control" placeholder="" autocomplete="off"
                                             readonly>
 
                                         @error('name')

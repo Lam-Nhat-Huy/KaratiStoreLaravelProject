@@ -19,7 +19,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct($model);
     }
 
-    public function pagination(array $column = ['*'], array $condition = [], array $join = [], array $extend = [], int $perPage = 10, array $relations = [], array $orderBy = [])
+    public function pagination(array $column = ['*'], array $condition = [], int $perPage = 10, array $orderBy = [], array $extend = [], array $join = [], array $relations = [], array $where = [])
     {
         $query = $this->model->select($column)->where(function ($query) use ($condition) {
             if (isset($condition['keyword']) && !empty($condition['keyword'])) {

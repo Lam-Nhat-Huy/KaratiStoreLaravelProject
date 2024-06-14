@@ -8,6 +8,7 @@ use App\Services\Interfaces\PostCatalogueServiceInterface as PostCatalogueServic
 use App\Repositories\Interfaces\PostCatalogueRepositoryInterface as PostCatalogueRepository;
 use Illuminate\Http\Request;
 use App\Classes\Nestedsetbie;
+use App\Http\Requests\DeletePostCatalogueRequest;
 
 class PostCatalogueController extends Controller
 {
@@ -119,7 +120,6 @@ class PostCatalogueController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($this->postCatalogueService->update($request, $id));
         if ($this->postCatalogueService->update($request, $id)) {
             return redirect()->route('post.catalogue.index')->with('success', 'Cập nhật bảng ghi thành công');
         }
@@ -138,7 +138,7 @@ class PostCatalogueController extends Controller
         ));
     }
 
-    public function destroy($id)
+    public function destroy($id, DeletePostCatalogueRequest $request)
     {
         if ($this->postCatalogueService->destroy($id)) {
             return redirect()->route('post.catalogue.index')->with('success', 'Xóa dữ liệu thành công');

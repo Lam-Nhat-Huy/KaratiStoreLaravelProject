@@ -25,7 +25,7 @@ class LanguageService implements LanguageServiceInterface
         $condition['keyword'] = addslashes($request->input('keyword'));
         $condition['publish'] = $request->integer('publish');
         $perPage = $request->integer('perpage');
-        $users =  $this->languageRepository->pagination($this->paginateSelect(), $condition, [], ['path' => 'admin/language/index'], $perPage, []);
+        $users =  $this->languageRepository->pagination($this->paginateSelect(), $condition, $perPage, [], ['path' => 'admin/user/index'], [], [], []);
         return $users;
     }
 

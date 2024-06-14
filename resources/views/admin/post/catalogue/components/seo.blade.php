@@ -5,7 +5,7 @@
     <div class="ibox-content">
         <div class="seo-container">
             <div class="meta-title">
-                {{ old('meta_title', $postCatalogue->meta_title ?? '') ?? 'Bạn chưa có tiêu đề SEO' }}
+                {{ old('meta_title') ?? 'Bạn chưa có tiêu đề SEO' }}
             </div>
 
             <div class="canonical">
@@ -13,7 +13,7 @@
             </div>
 
             <div class="meta-description">
-                {{ old('meta_description', $postCatalogue->meta_description ?? '') ?? 'Bạn chưa có mô tả SEO' }}
+                {{ old('meta_description') ?? 'Bạn chưa có mô tả SEO' }}
             </div>
         </div>
 

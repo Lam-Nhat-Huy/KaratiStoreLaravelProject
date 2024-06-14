@@ -8,7 +8,8 @@ namespace App\Repositories\Interfaces;
  */
 interface LanguageRepositoryInterface
 {
-    public function pagination(array $column = ['*'], array $condition = [], array $join = [], array $extend = [], int $perPage = 10, array $relations = [], array $orderBy = []);
+    public function pagination(array $column = ['*'], array $condition = [], int $perPage = 10, array $orderBy = [], array $extend = [], array $join = [], array $relations = [], array $where = []);
+
     public function create(array $payload = []);
     public function delete(int $id = 0);
     public function forceDelete(int $id = 0);
