@@ -15,6 +15,6 @@ interface PostRepositoryInterface
     public function findById(int $modelId, array $column = ['*'], array $relation = []);
     public function update(array $payload = [], int $id = 0);
     public function updateByWhereIn(string $whereInField, array $whereIn = [], array $payload);
-    public function createLanguagePivot($model, array $payload = []);
     public function getPostById(int $id = 0, $language_id = 0);
+    public function createPivot($model, array $payload = [], string $relation = '');
 }

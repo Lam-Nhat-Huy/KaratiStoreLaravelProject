@@ -66,7 +66,7 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
                 $payloadLanguage['language_id'] = $this->currentLanguage();
                 $payloadLanguage['post_catalogue_id'] = $postCatalogue->id;
                 $payloadLanguage['canonical'] = Str::slug($payloadLanguage['canonical']);
-                $this->postCatalogueRepository->createLanguagePivot($postCatalogue, $payloadLanguage); // warning
+                $this->postCatalogueRepository->createPivot($postCatalogue, $payloadLanguage, 'languages');
             }
 
             $this->nestedset->Get('level ASC, order ASC');
@@ -99,7 +99,7 @@ class PostCatalogueService extends BaseService implements PostCatalogueServiceIn
                     $payloadLanguage['language_id'],
                     $id
                 ]);
-                $reponse = $this->postCatalogueRepository->createLanguagePivot($postCatalogue, $payloadLanguage);
+                $reponse = $this->postCatalogueRepository->createPivot($postCatalogue, $payloadLanguage, 'languages');
                 $this->nestedset->Get('level ASC, order ASC');
                 $this->nestedset->Recursive(0, $this->nestedset->Set());
                 $this->nestedset->Action();

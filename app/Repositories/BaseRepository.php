@@ -102,8 +102,8 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->whereIn($whereInField, $whereIn)->update($payload);
     }
 
-    public function createLanguagePivot($model, array $payload = [])
+    public function createPivot($model, array $payload = [], string $relation = '')
     {
-        return $model->languages()->attach($model->id, $payload);
+        return $model->{$relation}()->attach($model->id, $payload);
     }
 }

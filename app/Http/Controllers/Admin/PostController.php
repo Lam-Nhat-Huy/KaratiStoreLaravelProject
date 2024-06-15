@@ -82,7 +82,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        dd($this->postService->create($request));
+        // dd($this->postService->create($request));
         if ($this->postService->create($request)) {
             return redirect()->route('post.index')->with('success', 'Thêm mới bảng ghi thành công');
         }

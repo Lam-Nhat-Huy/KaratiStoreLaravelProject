@@ -8,17 +8,17 @@
                 <div class="form-row">
                     <span class="text-danger notice">Chọn Root nếu không có danh mục cha</span>
 
-                    <select name="parent_id" class="form-control setupSelect2" id="">
+                    <select name="post_catalogue_id" class="form-control setupSelect2" id="">
                         @foreach ($dropdown as $key => $value)
                             <option
-                                {{ $key == old('parent_id', isset($post->parent_id) ? $post->parent_id : '') ? 'selected' : '' }}
+                                {{ $key == old('post_catalogue_id', isset($post->post_catalogue_id) ? $post->post_catalogue_id : '') ? 'selected' : '' }}
                                 value="{{ $key }}">
                                 {{ $value }}
                             </option>
                         @endforeach
                     </select>
 
-                    @error('parent_id')
+                    @error('post_catalogue_id')
                         <label id="firstname-error" class="error mt-2 text-danger"
                             for="firstname">{{ $message }}</label>
                     @enderror
