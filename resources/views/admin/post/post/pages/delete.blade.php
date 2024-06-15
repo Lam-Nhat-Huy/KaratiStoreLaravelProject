@@ -1,0 +1,49 @@
+@include('admin.dashboard.components.breadcrumb', ['title' => $config['seo']['delete']['title']])
+<div class="wrapper wrapper-content">
+    <div class="row" style="margin-top: 77px; padding: 42px;">
+        <form action="{{ route('post.destroy', $post->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="panel-head">
+                        <div class="panel-title">Thông tin chung</div>
+                        <div class="panel-description">
+                            <p>Bạn đang muốn xóa nhóm bài viết có tên là: <strong>{{ $post->email }}</strong>
+                            </p>
+                            <p>Lưu ý: Không thể khôi phục thành viên sao khi xóa. Hãy chắc chắn khi muốn thực hiện chức
+                                năng này</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row mb10">
+                                <div class="col-lg-12">
+                                    <div class="form-row">
+                                        <label for="" class="control-label text-right">Tên nhóm bài viết <span
+                                                class="text-danger">(*)</span></label>
+                                        <input value="{{ old('name', $post->name ?? '') }}" type="text"
+                                            name="name" class="form-control" placeholder="" autocomplete="off"
+                                            readonly>
+
+                                        @error('name')
+                                            <label id="firstname-error" class="error mt-2 text-danger"
+                                                for="firstname">{{ $message }}</label>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-danger mb10" name="send" value="send">Xóa</button>
+            </div>
+        </form>
+    </div>
+</div>

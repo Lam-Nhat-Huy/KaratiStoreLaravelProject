@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\UserCatalogueController;
 use App\Http\Controllers\Admin\PostCatalogueController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -74,6 +75,20 @@ Route::prefix('admin')->middleware(AuthenticateMiddleware::class)->group(functio
 
         Route::get('/delete/{id}', [PostCatalogueController::class, 'delete'])->name('post.catalogue.delete')->where(['id' => '[0-9]+']);
         Route::delete('/destroy/{id}', [PostCatalogueController::class, 'destroy'])->name('post.catalogue.destroy')->where(['id' => '[0-9]+']);
+    });
+
+    Route::prefix('post')->group(function () {
+        Route::get('/index', [PostController::class, 'index'])->name('post.index');
+        Route::get('/heal', [PostController::class, 'healthy_testing'])->name('post.healthy_testing');
+
+        Route::get('/create', [PostController::class, 'create'])->name('post.create');
+        Route::post('/store', [PostController::class, 'store'])->name('post.store');
+
+        Route::get('/edit/{id}', [PostController::class, 'edit'])->name('post.edit')->where(['id' => '[0-9]+']);
+        Route::post('/update/{id}', [PostController::class, 'update'])->name('post.update')->where(['id' => '[0-9]+']);
+
+        Route::get('/delete/{id}', [PostController::class, 'delete'])->name('post.delete')->where(['id' => '[0-9]+']);
+        Route::delete('/destroy/{id}', [PostController::class, 'destroy'])->name('post.destroy')->where(['id' => '[0-9]+']);
     });
 });
 

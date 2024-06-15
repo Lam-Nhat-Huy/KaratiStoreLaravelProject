@@ -23,7 +23,7 @@ return [
             'subModule' => [
                 [
                     'title' => 'QL Bài Viết',
-                    'route' => 'post.catalogue.index'
+                    'route' => 'post.index'
                 ],
                 [
                     'title' => 'QL Nhóm Bài Viết',

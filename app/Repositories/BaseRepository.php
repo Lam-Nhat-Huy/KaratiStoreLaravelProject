@@ -104,6 +104,6 @@ class BaseRepository implements BaseRepositoryInterface
 
     public function createLanguagePivot($model, array $payload = [])
     {
-        return $model->languages()->attach($model->id, $payload); // hàm language được trỏ từ model ra
+        return $model->languages()->attach($model->id, $payload);
     }
 }

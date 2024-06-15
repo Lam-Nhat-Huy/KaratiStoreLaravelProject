@@ -10,9 +10,12 @@
 
 
     <div class="ibox-content">
+        @php
+            $gallery = isset($album) && count($album) ? $album : old('album');
+        @endphp
         <div class="row">
             <div class="col-md-12">
-                @if (!isset($album) || count($album) == 0)
+                @if (!isset($gallery) || count($gallery) == 0)
                     <div class="click-to-upload">
                         <div class="icon">
                             <a href="" class="upload-picture">
@@ -45,11 +48,11 @@
                     </div>
                 @endif
 
-                @if (isset($album) && count($album))
-                    <div class="upload-list {{ count($album) ? '' : 'hidden' }}">
-                        <div class="row">
-                            <ul id="sortable" class="clearfix data-album sortui ui-sortable">
-                                @foreach ($album as $key => $value)
+                <div class="upload-list {{ isset($gallery) && count($gallery) ? '' : 'hidden' }}">
+                    <div class="row">
+                        <ul id="sortable" class="clearfix data-gallery sortui ui-sortable">
+                            @if (isset($gallery) && count($gallery))
+                                @foreach ($gallery as $key => $value)
                                     <li class="ui-state-default">
                                         <div class="thumb">
                                             <span class="span image img-scaledown">
@@ -60,18 +63,10 @@
                                         </div>
                                     </li>
                                 @endforeach
-                            </ul>
-                        </div>
+                            @endif
+                        </ul>
                     </div>
-                @else
-                    <div class="upload-list hidden">
-                        <div class="row">
-                            <ul id="sortable" class="clearfix data-album sortui ui-sortable">
-
-                            </ul>
-                        </div>
-                    </div>
-                @endif
+                </div>
             </div>
         </div>
     </div>

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Validation\Rule;
 
 class PostCatalogue extends Model
 {
@@ -43,33 +42,25 @@ class PostCatalogue extends Model
             )->withTimestamps();
     }
 
-    public function post_catalogue_language()
+    public function posts()
     {
-        return $this->hasMany(PostCatalogueLanguage::class, 'post_catalogue_id', 'id');
+        return $this->belongsToMany(Post::class, 'post_catalogue_post', 'post_catalogue_id', 'post_id');
     }
 
-    public function isChildrenNode($id = 0)
+
+    public function post_catalogue_language()
     {
-        $postCatalogue = $this->find($id);
-        echo $postCatalogue->id;
-        die();
-        if (!$postCatalogue) {
-            return false;
-        }
-        if ($postCatalogue->rgt - $postCatalogue->lft > 1) {
-            echo 123;
-            die();
-            return false;
-        }
-        return true;
+        return $this->hasMany(PostCatalogueLanguage::class, 'post_catalogue_id', 'id')->where('language_id', '=', 1);
     }
 
     public static function isNodeCheck($id = 0)
     {
         $postCatalogue = PostCatalogue::find($id);
+
         if ($postCatalogue->rgt - $postCatalogue->lft !== 1) {
             return false;
         }
+
         return true;
     }
 }
