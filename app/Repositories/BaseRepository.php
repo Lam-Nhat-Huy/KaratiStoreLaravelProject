@@ -24,45 +24,17 @@ class BaseRepository implements BaseRepositoryInterface
         $this->model = $model;
     }
 
-    public function pagination(
-        array $column = ['*'],
-        array $condition = [],
-        int $perPage = 10,
-        array $orderBy = [],
-        array $extend = [],
-        array $join = [],
-        array $relations = [],
-        array $where = []
-    ) {
-        $query = $this->model->select($column)->where(function ($query) use ($condition) {
-            if (isset($condition['keyword']) && !empty($condition['keyword'])) {
-                $query->where('name', 'LIKE', '%' . $condition['keyword'] . '%');
-            }
-
-            if (isset($condition['publish']) && $condition['publish'] != 0) {
-                $query->where('publish', '=', $condition['publish']);
-            }
-
-            return $query;
-        });
-
-        if (isset($join) && is_array($join) && count($join)) {
-            foreach ($join as $key => $value) {
-                $query->join($value[0], $value[1], $value[2], $value[3]);
-            }
-        }
-
-        if (isset($orderBy) && !empty($orderBy)) {
-            $query->orderBy($orderBy[0], $orderBy[1]);
-        }
-
-        if (isset($condition['where']) && count($condition['where'])) {
-            foreach ($condition['where'] as $key => $value) {
-                $query->where($value[0], $value[1], $value[2]);
-            }
-        }
-
-        return $query->paginate($perPage)->withQueryString()->withPath(env('APP_URL') . $extend['path']);
+    public function pagination(array $column = ['*'], array $condition = [], int $perPage = 10, array $orderBy = ['id' => 'DESC'], array $extend = [], array $join = [], array $relations = [], array $where = [])
+    {
+        $query = $this->model->select($column)
+            ->keyword($condition['keyword'] ?? null)
+            ->publish($condition['publish'] ?? null)
+            ->relationCount($relations ?? null)
+            ->customJoin($join ?? null)
+            ->customOrderBy($orderBy ?? null)
+            ->customWhere($condition['where'] ?? null)
+            ->paginate($perPage)->withQueryString()->withPath(env('APP_URL') . $extend['path']);
+        return $query;
     }
 
     public function all()
