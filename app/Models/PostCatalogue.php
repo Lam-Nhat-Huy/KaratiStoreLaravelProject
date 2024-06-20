@@ -50,7 +50,7 @@ class PostCatalogue extends Model
 
     public function post_catalogue_language()
     {
-        return $this->hasMany(PostCatalogueLanguage::class, 'post_catalogue_id', 'id')->where('language_id', '=', 1);
+        return $this->hasMany(PostCatalogueLanguage::class, 'post_catalogue_id', 'id');
     }
 
     public static function isNodeCheck($id = 0)

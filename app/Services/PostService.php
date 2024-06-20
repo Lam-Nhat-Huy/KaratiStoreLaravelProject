@@ -41,7 +41,7 @@ class PostService extends BaseService implements PostServiceInterface
             ['posts.id', 'DESC'],
             ['path' => ''],
             [['post_language as tb2', 'tb2.post_id', '=', 'posts.id']],
-            [],
+            ['post_catalogues'],
         );
         return $post;
     }
@@ -60,6 +60,7 @@ class PostService extends BaseService implements PostServiceInterface
                 $payloadLanguage['language_id'] = $this->currentLanguage();
                 $payloadLanguage['post_id'] = $post->id;
                 $payloadLanguage['canonical'] = Str::slug($payloadLanguage['canonical']);
+                $this->postRepository->createPivot($post, $payloadLanguage, 'languages');
                 $catalogue = $this->catalogue($request);
                 $post->post_catalogues()->sync($catalogue);
             }
@@ -87,12 +88,15 @@ class PostService extends BaseService implements PostServiceInterface
             if ($flag === TRUE) {
                 $payloadLanguage = $request->only($this->payloadLanguage());
                 $payloadLanguage['language_id'] = $this->currentLanguage();
-                $payloadLanguage['post_catalogue_id'] = $id;
+                $payloadLanguage['post_id'] = $post->id;
+                $payloadLanguage['canonical'] = Str::slug($payloadLanguage['canonical']);
                 $post->languages()->detach([
                     $payloadLanguage['language_id'],
                     $id
                 ]);
-                $reponse = $this->postRepository->createPivot($post, $payloadLanguage);
+                $reponse = $this->postRepository->createPivot($post, $payloadLanguage, 'languages');
+                $catalogue = $this->catalogue($request);
+                $post->post_catalogues()->sync($catalogue);
             }
 
             DB::commit();
@@ -183,7 +187,6 @@ class PostService extends BaseService implements PostServiceInterface
             'tb2.canonical',
             'posts.publish',
             'posts.image',
-            'posts.level',
             'posts.order',
         ];
     }
