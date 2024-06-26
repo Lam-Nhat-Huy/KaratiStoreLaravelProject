@@ -52,6 +52,7 @@ Route::prefix('admin')->middleware(AuthenticateMiddleware::class)->group(functio
 
     Route::prefix('language')->group(function () {
         Route::get('/index', [LanguageController::class, 'index'])->name('language.index');
+        Route::get('/switch/{id}', [LanguageController::class, 'switchBackendLanguage'])->name('language.switch');
 
         Route::get('/create', [LanguageController::class, 'create'])->name('language.create');
         Route::post('/store', [LanguageController::class, 'store'])->name('language.store');

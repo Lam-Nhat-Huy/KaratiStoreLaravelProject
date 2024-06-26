@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLoginRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,7 @@ class AuthController extends Controller
             'name' => $request->input('name'),
             'password' => $request->input('password'),
         ];
+
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('dashboard.index')->with('success', 'Đăng nhập thành công');

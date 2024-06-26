@@ -28,7 +28,7 @@
                 $segment = request()->segment(1);
             @endphp
 
-            @foreach (config('apps.module.module') as $key => $val)
+            @foreach (__('sidebar.module') as $key => $val)
                 <li>
                     <a href=""><i class="{{ $val['icon'] }}"></i> <span
                             class="nav-label">{{ $val['title'] }}</span>

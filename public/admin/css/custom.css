@@ -229,3 +229,12 @@
     font-weight: 600;
 
 }
+
+.language-item {
+    height: 20px !important;
+}
+
+
+.language-item.active {
+
+}

@@ -32,6 +32,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = $this->postService->paginate($request);
+
         $template = "admin.post.post.pages.index";
 
         $config = [

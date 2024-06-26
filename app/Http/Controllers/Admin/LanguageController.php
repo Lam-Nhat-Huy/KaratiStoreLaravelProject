@@ -128,4 +128,10 @@ class LanguageController extends Controller
         }
         return redirect()->route('language.index')->with('error', 'Xóa dữ liệu thất bại');
     }
+
+    public function switchBackendLanguage($id)
+    {
+        $this->languageService->switch($id);
+        return back();
+    }
 }
